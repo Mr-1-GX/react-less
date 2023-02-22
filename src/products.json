@@ -1,0 +1,26 @@
+[
+    {
+        "category": "რაცხა",
+        "name": "რუცხუნა",
+        "price": 20,
+        "stock": false
+    },
+    {
+        "category": "ტანისამოსი",
+        "name": "ქურთუკი",
+        "price": 3,
+        "stock": true
+    },
+    {
+        "category": "ავტომობილი",
+        "name": "subaru",
+        "price": 200,
+        "stock": false
+    },
+    {
+        "category": "ხილი",
+        "name": "მანგო",
+        "price": 10,
+        "stock": true
+    }
+]

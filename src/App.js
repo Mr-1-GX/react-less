@@ -1,14 +1,19 @@
-import Greeting from './Greeting'
-import Welcome from './Welcome'
+
+import { Header } from './components/header'
+import { Footer } from './components/footer'
+
+import { Home } from './pages/home'
+import { Products } from './pages/products';
 
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Greeting massage="text tone" ansver="music bit" />
-      <Welcome user="MrGX" age={36} />
-      <Greeting massage="My Name Is ZORO" ansver="you name is shalva" />
+      <Header />
+      <Products />
+      <Home />
+      <Footer />
     </div>
   );
 }
