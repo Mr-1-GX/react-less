@@ -1,20 +1,17 @@
 
 import { useState } from 'react'
+// import { debounce } from 'lodash'
+
+import { ProductItem } from './Productitem'
+import { Button, TextInput, Form } from '../../atoms'
+import { Collapsible } from '../../components/collapsible'
 import productsData from '../../products.json'
 
-export const ProductItem = ({ product }) => {
-    return (
-        <div>
-            <h4>{product.name},  ღირებულება: {product.price}$</h4>
-            <h3>
-                კატეგორია - {product.category},
-            </h3>
-            <h4>{product.stock ? 'მარაგშია' : 'არარის'}</h4>
-        </div>
-    )
-}
+
+
 export const Products = () => {
-    const [inSocOnly, setInStockOnly] = useState(false)
+    const [inStockOnly, setInStockOnly] = useState(false)
+    const [filterTerm, setFilterTerm] = useState('')
     // console.log(productsData)
     // const renderProducts =()=> {
     //     const row =[]
@@ -24,10 +21,14 @@ export const Products = () => {
     //         }
     //     })
     // }
+    console.log('__Products Render__')
     const renderProducts = () => {
         let data = productsData.slice();
-        if (inSocOnly) {
-            data = productsData.filter((item) => item.stock);
+        if (inStockOnly) {
+            data = data.filter((item) => item.stock);
+        }
+        if (filterTerm && filterTerm.length > 2) {
+            data = data.filter((el) => el.name.includes(filterTerm))
         }
         return data.map((item, index) => {
             return <ProductItem product={item} key={index} />
@@ -36,14 +37,38 @@ export const Products = () => {
     return (
         <div className="row shadow m-4 p-3">
             <h2>PRODUCTS</h2>
-            <button
-                className='btn btn-outline-primary'
-                onClick={() => setInStockOnly(!inSocOnly)}
-            >
-                რამდენი პროდუქტი დარჩა
-            </button>
+            <Form>
+                <div className='mb-3 row'>
+                    <div className='col-8'>
+                        <TextInput
+                            value={filterTerm}
+                            placeholder='ძიება'
+                            onChange={({ target }) => {
+                                setFilterTerm(target.value)
+                            }}
+                        />
+                        <h3>
+                            💬 {filterTerm}
+                        </h3>
+                    </div>
+                    <div className='col-4'>
+                        <Button
+                            className='btn btn-outline-primary'
+                            type='button'
+                            onClick={() => setInStockOnly(!inStockOnly)}
+                        >
+                            {inStockOnly ? '📊სრული სია' : '💣დარჩა'}
+                        </Button>
+                    </div>
+                </div>
+            </Form>
             <hr />
-            {renderProducts()}
+            <Collapsible
+                closedTitle='მაჩვენე'
+                opendTitle='დამალე'
+            >
+                {renderProducts()}
+            </Collapsible>
         </div>
     )
 }

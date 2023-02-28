@@ -1,0 +1,8 @@
+
+.colap-style {
+    opacity: 0;
+    transition: opacity 400ms ease-out;
+}
+.colap-style.opend {
+    opacity: 1;
+}
