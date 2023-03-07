@@ -1,4 +1,6 @@
 
+import { Routes, Route } from 'react-router-dom'
+
 import { Header } from './components/header'
 import { Footer } from './components/footer'
 import { Layout } from './components/layout';
@@ -14,8 +16,10 @@ function App() {
     <CartProvider>
       <Layout className="App">
         <Header />
-        <Home />
-        <Products />
+        <Routes>
+          <Route path='/' index element={<Home />} />
+          <Route path='/products' element={<Products />} />
+        </Routes>
         <Footer />
       </Layout>
     </CartProvider>
