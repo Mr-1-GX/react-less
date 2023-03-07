@@ -67,7 +67,9 @@ export const Products = () => {
                 closedTitle='მაჩვენე'
                 opendTitle='დამალე'
             >
-                {renderProducts()}
+                <div className='d-flex flex-wrap'>
+                    {renderProducts()}
+                </div>
             </Collapsible>
         </div>
     )

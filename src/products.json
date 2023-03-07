@@ -3,24 +3,35 @@
         "category": "რაცხა",
         "name": "რუცხუნა",
         "price": 20,
-        "stock": false
+        "stock": false,
+        "id": 1
     },
     {
         "category": "ტანისამოსი",
         "name": "ქურთუკი",
         "price": 3,
-        "stock": true
+        "stock": true,
+        "id": 2
     },
     {
         "category": "ავტომობილი",
         "name": "subaru",
         "price": 200,
-        "stock": false
+        "stock": false,
+        "id": 3
     },
     {
         "category": "ხილი",
         "name": "მანგო",
         "price": 10,
-        "stock": true
+        "stock": true,
+        "id": 4
+    },
+    {
+        "category": "car",
+        "name": "ToYoTa",
+        "price": 100.200,
+        "stock": true,
+        "id": 5
     }
 ]
