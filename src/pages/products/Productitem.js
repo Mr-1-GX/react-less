@@ -1,6 +1,6 @@
 
-import { useContext, useState } from 'react'
-import { CartContext } from '../../providers/CartProvider'
+import { useState } from 'react'
+import { useCart } from '../../providers/CartProvider'
 import { Alert, Button } from '../../atoms'
 import './ProductItem.css'
 
@@ -9,7 +9,7 @@ export const ProductItem = ({ product }) => {
         addNevItem,
         removeItem,
         cart: { items: cardItems }
-    } = useContext(CartContext)
+    } = useCart()
     const [outOfStock, setOutOfStock] = useState(false)
     const isInCart = product.id in cardItems
 
@@ -23,7 +23,7 @@ export const ProductItem = ({ product }) => {
 
     return (
         <div className="card productItem--card">
-            <div className="card-body mb-1">
+            <div className="card">
                 <h3>კატეგორია - {product.category},</h3>
                 <h2>{product.name},</h2>
             </div>
