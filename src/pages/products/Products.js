@@ -5,13 +5,14 @@ import { useState } from 'react'
 import { ProductItem } from './Productitem'
 import { Button, TextInput, Form } from '../../atoms'
 import { Collapsible } from '../../components/collapsible'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
 import productsData from '../../products.json'
 
 
 
 export const Products = () => {
     const [inStockOnly, setInStockOnly] = useState(false)
-    const [filterTerm, setFilterTerm] = useState('')
+    const [filterTerm, setFilterTerm] = useLocalStorage('super-app:shoping-cart', '')
     // console.log(productsData)
     // const renderProducts =()=> {
     //     const row =[]
@@ -21,6 +22,7 @@ export const Products = () => {
     //         }
     //     })
     // }
+
     console.log('__Products Render__')
     const renderProducts = () => {
         let data = productsData.slice();
@@ -34,6 +36,9 @@ export const Products = () => {
             return <ProductItem product={item} key={index} />
         })
     }
+    const handleFilterChange = ({ target }) => {
+        setFilterTerm(target.value)
+    }
     return (
         <div className="row shadow m-4 p-3">
             <h2>PRODUCTS</h2>
@@ -43,9 +48,7 @@ export const Products = () => {
                         <TextInput
                             value={filterTerm}
                             placeholder='ძიება'
-                            onChange={({ target }) => {
-                                setFilterTerm(target.value)
-                            }}
+                            onChange={handleFilterChange}
                         />
                         <h3>
                             💬 {filterTerm}

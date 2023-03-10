@@ -1,9 +1,8 @@
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { ProductTable } from '../../components/table'
 
 export const ShopingCart = () => {
-    const [value, setValue] = useState()
     //  Component each re-render 
     // useEffect(() => {
     //     console.log('SHOPPING CART')
@@ -18,7 +17,6 @@ export const ShopingCart = () => {
         console.log('AJAX request, started')
         const timerId = setTimeout(() => {
             console.log('AJAX request, finish')
-            setValue(Math.random())
         }, 3000);
         return () => {
             clearTimeout(timerId)

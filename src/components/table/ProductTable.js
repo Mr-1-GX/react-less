@@ -59,8 +59,8 @@ export const ProductTable = () => {
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">დასახელება</th>
-                    <th scope="col">რაოდენობა</th>
                     <th scope="col">ფასი</th>
+                    <th scope="col">რაოდენობა</th>
                     <th scope="col">მთლიანი თანხა</th>
                     <th scope="col">მოქმედება</th>
                 </tr>
