@@ -1,18 +1,21 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 // import { debounce } from 'lodash'
 
 import { ProductItem } from './Productitem'
 import { Button, TextInput, Form } from '../../atoms'
 import { Collapsible } from '../../components/collapsible'
-import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { useLocalStorage, useDebounce } from '../../hooks'
+
 import productsData from '../../products.json'
 
 
 
 export const Products = () => {
     const [inStockOnly, setInStockOnly] = useState(false)
-    const [filterTerm, setFilterTerm] = useLocalStorage('super-app:shoping-cart', '')
+    const [result, setResult] = useState(productsData.slice())
+    const [filterTerm, setFilterTerm] = useLocalStorage('super-app:filter-term', '')
+    const pausedSearch = useDebounce(filterTerm, 400)
     // console.log(productsData)
     // const renderProducts =()=> {
     //     const row =[]
@@ -22,15 +25,22 @@ export const Products = () => {
     //         }
     //     })
     // }
-
-    console.log('__Products Render__')
-    const renderProducts = () => {
-        let data = productsData.slice();
-        if (inStockOnly) {
-            data = data.filter((item) => item.stock);
+    useEffect(() => {
+        if (pausedSearch) {
+            const data = productsData.filter((el) =>
+                el.name.toLowerCase().includes(pausedSearch.toLowerCase())
+            )
+            setResult(data)
+        } else {
+            setResult(productsData.slice())
         }
-        if (filterTerm && filterTerm.length > 2) {
-            data = data.filter((el) => el.name.includes(filterTerm))
+    }, [pausedSearch])
+
+    const renderProducts = () => {
+        console.log('__Products Render__')
+        let data = result.slice();
+        if (inStockOnly) {
+            data = result.filter((item) => item.stock);
         }
         return data.map((item, index) => {
             return <ProductItem product={item} key={index} />
@@ -47,8 +57,8 @@ export const Products = () => {
                     <div className='col-8'>
                         <TextInput
                             value={filterTerm}
-                            placeholder='ძიება'
                             onChange={handleFilterChange}
+                            placeholder='ძიება...'
                         />
                         <h3>
                             💬 {filterTerm}

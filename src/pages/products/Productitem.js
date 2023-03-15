@@ -1,7 +1,10 @@
 
 import { useState } from 'react'
+import PropTypes from 'prop-types'
+
 import { useCart } from '../../providers/CartProvider'
 import { Alert, Button } from '../../atoms'
+
 import './ProductItem.css'
 
 export const ProductItem = ({ product }) => {
@@ -11,7 +14,6 @@ export const ProductItem = ({ product }) => {
         cart: { items: cardItems }
     } = useCart()
     const [outOfStock, setOutOfStock] = useState(false)
-    const isInCart = product.id in cardItems
 
     const handleAddCart = () => {
         if (product.stock) {
@@ -20,7 +22,10 @@ export const ProductItem = ({ product }) => {
             setOutOfStock(true)
         }
     }
-
+    if (!product) {
+        return null
+    }
+    const isInCart = product.id in cardItems
     return (
         <div className="card productItem--card">
             <div className="card">
@@ -57,4 +62,8 @@ export const ProductItem = ({ product }) => {
             </div>
         </div>
     )
+}
+
+ProductItem.propTypes = {
+    product: PropTypes.object.isRequired
 }

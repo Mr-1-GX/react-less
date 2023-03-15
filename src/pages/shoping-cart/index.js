@@ -1,2 +1,2 @@
 
-export { ShopingCart } from './ShopingCart'
+export { ShopingCart, ShopingCart as default } from './ShopingCart'
