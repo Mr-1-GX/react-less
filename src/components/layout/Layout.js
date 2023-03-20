@@ -1,10 +1,27 @@
+import { Outlet } from "react-router-dom"
 
-export const Layout = ({ children, className }) => {
+import { Footer } from "../footer"
+import { Header } from "../header"
+
+const sizes = {
+    default: 'container',
+    fluid: 'container-fluid'
+}
+
+const outletStile = {
+    minHeight: '500px'
+}
+
+export const Layout = ({ className, size = 'default' }) => {
     return (
         <div
-            className={`container ${className}`}
+            className={`${sizes[size]} ${className}`}
         >
-            {children}
+            <Header />
+            <div className='my-3' style={outletStile}>
+                <Outlet />
+            </div>
+            <Footer />
         </div>
     )
 }

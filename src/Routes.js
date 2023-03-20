@@ -3,30 +3,36 @@ import { lazy, Suspense } from 'react';
 import { Routes as Router, Route } from 'react-router-dom'
 
 import { Loader } from './atoms';
+import { Layout } from './components/layout'
 import { Home } from './pages/home'
+import { Login } from './pages/login'
+import { Register } from './pages/register'
 import { NoMatch } from './pages/NoMatch';
+import * as routes from './utils/routPaths'
 
 const Products = lazy(() => import('./pages/products'))
 const ShopingCart = lazy(() => import('./pages/shoping-cart'))
 
 export const Routes = () => {
     return (
-        <div className='my-3' style={{ minHeight: '300px' }}>
-            <Router>
-                <Route path='/' index element={<Home />} />
-                <Route path='/products' element={
+        <Router>
+            <Route element={<Layout />}>
+                <Route path={routes.HOME_PATH} index element={<Home />} />
+                <Route path={routes.HOME_PATH} element={
                     <Suspense fallback={<Loader massage='Product Loading...' />}>
                         <Products />
                     </Suspense>
                 } />
-                <Route path='/shoping-cart' element={
+                <Route path={routes.SHOPNG_CART_PATH} element={
                     <Suspense fallback={<Loader massage='Card Loading...' />}>
                         <ShopingCart />
                     </Suspense>
                 } />
-                <Route path='*' element={<NoMatch />} />
-            </Router>
-        </div>
+                <Route path={routes.LOGIN_PATH} element={<Login />} />
+                <Route path={routes.REGISTER_PATH} element={<Register />} />
+                <Route path={routes.NO_MATCH_PATH} element={<NoMatch />} />
+            </Route>
+        </Router>
     )
 }
 
