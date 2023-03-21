@@ -1,8 +1,11 @@
 
 import { useEffect } from 'react'
+import { Loader } from '../../atoms'
 import { ProductTable } from '../../components/table'
+import { useRequireAuth } from '../../hooks'
 
 export const ShopingCart = () => {
+    const auth = useRequireAuth()
     //  Component each re-render 
     // useEffect(() => {
     //     console.log('SHOPPING CART')
@@ -22,6 +25,11 @@ export const ShopingCart = () => {
             clearTimeout(timerId)
         }
     }, [])
+
+    if (!auth) {
+        return <Loader />
+    }
+
     return (
         <div className="row">
             <h2>Shopping Cart 🛍</h2>

@@ -1,14 +1,17 @@
 
 import { CartProvider } from './providers/CartProvider';
+import { AuthProvider } from './providers/AuthProvider';
 import { Routes } from './Routes'
 
 import './App.css';
 
 function App() {
   return (
-    <CartProvider>
-      <Routes />
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <Routes />
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

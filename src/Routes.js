@@ -18,7 +18,7 @@ export const Routes = () => {
         <Router>
             <Route element={<Layout />}>
                 <Route path={routes.HOME_PATH} index element={<Home />} />
-                <Route path={routes.HOME_PATH} element={
+                <Route path={routes.PRODUCTS_PATH} element={
                     <Suspense fallback={<Loader massage='Product Loading...' />}>
                         <Products />
                     </Suspense>
