@@ -2,9 +2,9 @@
 import { Link } from 'react-router-dom'
 
 import { LeftNav } from './LeftNav'
+import { RightNav } from './RightNav'
 
 import "./header.css"
-import { RightNav } from './RightNav'
 
 export const Header = () => {
     return (

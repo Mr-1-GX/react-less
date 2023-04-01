@@ -3,10 +3,10 @@ import { useCart } from "../../providers/CartProvider"
 import { ProductTableRow } from './ProductTableRow'
 
 export const ProductTable = () => {
-    const { addNevItem, removeItem, cart } = useCart()
+    const { addNewItem, removeItem, cart } = useCart()
     const renderProducts = () => {
-        const cartItems = Object.entries(cart.items)
-        if (!cartItems.length) {
+        const cardItems = Object.entries(cart.item)
+        if (!cardItems.length) {
             return (
                 <tr>
                     <td colSpan='5'>
@@ -16,7 +16,7 @@ export const ProductTable = () => {
             )
         }
         return (
-            cartItems.map(([productId, item]) => {
+            cardItems.map(([productId, item]) => {
                 const currentItem = {
                     ...item,
                     id: productId
@@ -26,7 +26,7 @@ export const ProductTable = () => {
                         key={`product-${productId}`}
                         {...item}
                         id={+productId}
-                        onCartAdd={() => addNevItem(currentItem)}
+                        onCartAdd={() => addNewItem(currentItem)}
                         onCartRemove={() => removeItem(currentItem)}
                     />
                 )

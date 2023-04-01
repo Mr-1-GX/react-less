@@ -6,21 +6,11 @@ import { useRequireAuth } from '../../hooks'
 
 export const ShopingCart = () => {
     const auth = useRequireAuth()
-    //  Component each re-render 
-    // useEffect(() => {
-    //     console.log('SHOPPING CART')
-    // })
-
-    //  Component first render once
-    // useEffect(() => {
-    //     console.log('SHOPPING CART')
-    // }, [])
-
     useEffect(() => {
         console.log('AJAX request, started')
         const timerId = setTimeout(() => {
             console.log('AJAX request, finish')
-        }, 3000);
+        }, 5000);
         return () => {
             clearTimeout(timerId)
         }

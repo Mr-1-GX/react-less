@@ -1,26 +1,26 @@
 
 import { createContext, useContext } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useLocalStorage } from '../../hooks/useLocalStorage'
 
-export const CartContext = createContext({
+const initialState = {
     total: 0,
-    items: {}
-});
-CartContext.displayName = 'CartContext';
+    item: []
+}
+
+export const CartContext = createContext(initialState)
+CartContext.displayName = 'CartContext'
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useLocalStorage('super-app:shoping-cart', {
-        total: 0,
-        items: {}
-    })
-    const addNevItem = (product) => {
+    const [cart, setCart] = useLocalStorage("super-app: shoping-cart", initialState)
+    const addNewItem = (product) => {
+        console.log(product)
         setCart((prev) => {
             let newItem
-            if (prev.items[product.id]) {
-                const cartProduct = prev.items[product.id]
+            if (prev.item[product.id]) {
+                const cardProduct = prev.item[product.id]
                 newItem = {
-                    ...cartProduct,
-                    qty: cartProduct.qty + 1
+                    ...cardProduct,
+                    qty: cardProduct.qty + 1
                 }
             } else {
                 newItem = {
@@ -29,32 +29,29 @@ export const CartProvider = ({ children }) => {
                     qty: 1
                 }
             }
-            return (
-                {
-                    ...prev,
-                    total: prev.total + product.price,
-                    items: {
-                        ...prev.items,
-                        [product.id]: newItem
-                    }
+            return {
+                ...prev,
+                total: prev.total + product.price,
+                item: {
+                    ...prev.item,
+                    [product.id]: newItem
                 }
-            )
+            }
         })
     }
     const removeItem = (product) => {
         setCart((prev) => {
-            let newItem = { ...prev.items }
+            let newItem = { ...prev.item }
             let total = prev.total
-            if (prev.items[product.id]) {
-                const cartProduct = prev.items[product.id]
-                if (cartProduct.qty > 1) {
-                    const update = {
-                        ...cartProduct,
-                        qty: cartProduct.qty - 1
-                    }
+            if (prev.item[product.id]) {
+                const cardProduct = prev.item[product.id]
+                if (cardProduct.qty > 1) {
                     newItem = {
-                        ...prev.items,
-                        [product.id]: update
+                        ...prev.item,
+                        [product.id]: {
+                            ...cardProduct,
+                            qty: cardProduct.qty - 1,
+                        },
                     }
                     total -= product.price
                 } else {
@@ -62,23 +59,26 @@ export const CartProvider = ({ children }) => {
                     delete newItem[product.id]
                 }
             }
-            return (
-                {
-                    ...prev,
-                    total,
-                    items: {
-                        ...newItem
-                    }
-                }
-            )
+
+            return {
+                ...prev,
+                total,
+                item: newItem
+            }
         })
     }
+    const resetBucket = () => {
+        setCart(initialState)
+    }
     return (
-        <CartContext.Provider value={{
-            cart,
-            addNevItem,
-            removeItem
-        }}>
+        <CartContext.Provider
+            value={{
+                cart,
+                addNewItem,
+                removeItem,
+                resetBucket
+            }}
+        >
             {children}
         </CartContext.Provider>
     )
@@ -87,7 +87,7 @@ export const CartProvider = ({ children }) => {
 export const useCart = () => {
     const cart = useContext(CartContext)
     if (!cart) {
-        throw SyntaxError('Card Provaider is not defined')
+        throw SyntaxError('CartProvider is not definded')
     }
     return cart
 }

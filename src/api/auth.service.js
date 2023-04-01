@@ -1,23 +1,25 @@
 
-import axios from "axios";
+import axios from 'axios'
 
-import { API_BASE_URL } from "./config";
+import { API_BASE_URL } from './config'
 
 axios.defaults.baseURL = API_BASE_URL
 
 export const loginAsync = async (data) => {
     try {
-        const response = await axios.post(`/login`, data)
+        const response = await axios.post('/login', data)
         return response.data
     } catch (e) {
-        console.log('__loginAsync_Error__', e)
+        console.log('__loginAsync__Error', e)
         return null
     }
 }
-
 export const registerAsync = async (data) => {
-    try { } catch (e) {
-        console.log('__registerAsync__', e)
+    try {
+        const response = await axios.post('/register', data)
+        return response.data
+    } catch (e) {
+        console.log('__registerAsync__Error', e)
         return null
     }
 }

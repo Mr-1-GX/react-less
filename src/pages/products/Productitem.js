@@ -9,15 +9,15 @@ import './ProductItem.css'
 
 export const ProductItem = ({ product }) => {
     const {
-        addNevItem,
+        addNewItem,
         removeItem,
-        cart: { items: cardItems }
+        cart: { item: cardItems }
     } = useCart()
     const [outOfStock, setOutOfStock] = useState(false)
 
     const handleAddCart = () => {
         if (product.stock) {
-            addNevItem(product)
+            addNewItem(product)
         } else {
             setOutOfStock(true)
         }

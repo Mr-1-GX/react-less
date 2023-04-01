@@ -1,89 +1,85 @@
+import { useState, useEffect } from 'react';
+// import debounce from 'lodash/debounce';
 
-import { useEffect, useState } from 'react'
-// import { debounce } from 'lodash'
-
-import { ProductItem } from './Productitem'
-import { Button, TextInput, Form } from '../../atoms'
-import { Collapsible } from '../../components/collapsible'
-import { useLocalStorage, useDebounce } from '../../hooks'
-
-import productsData from '../../products.json'
-
+import { ProductItem } from './Productitem';
+import { Button, TextInput, Form } from '../../atoms';
+import { Collapsible } from '../../components/collapsible';
+import { useLocalStorage, useDebounce } from '../../hooks';
+import productData from '../../products.json';
 
 
 export const Products = () => {
-    const [inStockOnly, setInStockOnly] = useState(false)
-    const [result, setResult] = useState(productsData.slice())
-    const [filterTerm, setFilterTerm] = useLocalStorage('super-app:filter-term', '')
+    const [inStockOnly, setInStockOnly] = useState(false);
+    const [result, setResult] = useState(productData.slice())
+    const [filterTerm, setFilterTerm] = useLocalStorage('super-app: filter-term', '');
     const pausedSearch = useDebounce(filterTerm, 400)
-    // console.log(productsData)
-    // const renderProducts =()=> {
-    //     const row =[]
-    //     productsData.forEach(product => {
-    //         if (product.category !== lastCategory) {
-
-    //         }
+    // const renderProduct =()=> {
+    //     const rows = [];
+    //     let lastCategory = null;
+    //     productData.forEach(product =>{
+    //         if()
     //     })
     // }
     useEffect(() => {
         if (pausedSearch) {
-            const data = productsData.filter((el) =>
-                el.name.toLowerCase().includes(pausedSearch.toLowerCase())
-            )
+            const data = productData.filter((el) =>
+                el.name.toLowerCase().includes(pausedSearch.toLowerCase()))
             setResult(data)
         } else {
-            setResult(productsData.slice())
+            setResult(productData.slice())
         }
     }, [pausedSearch])
 
-    const renderProducts = () => {
-        console.log('__Products Render__')
-        let data = result.slice();
+    console.log('__Product__Render__')
+
+    const renderProduct = () => {
+        let data = result.slice()
         if (inStockOnly) {
-            data = result.filter((item) => item.stock);
+            data = result.filter((item) => item.stock)
         }
         return data.map((item, index) => {
             return <ProductItem product={item} key={index} />
         })
     }
-    const handleFilterChange = ({ target }) => {
+
+    const hendleFilterChange = ({ target }) => {
         setFilterTerm(target.value)
     }
+
     return (
-        <div className="row shadow m-4 p-3">
-            <h2>PRODUCTS</h2>
-            <Form>
-                <div className='mb-3 row'>
+        <div className="row shadow my-3 p-3">
+            <h3>Product</h3>
+            <Form className='my-2 p-1'>
+                <div className='my-3 row'>
                     <div className='col-8'>
+                        <h4> filter {filterTerm}</h4>
                         <TextInput
                             value={filterTerm}
-                            onChange={handleFilterChange}
+                            onChange={hendleFilterChange}
                             placeholder='ძიება...'
                         />
-                        <h3>
-                            💬 {filterTerm}
-                        </h3>
                     </div>
-                    <div className='col-4'>
+                    <div className='col-2 p-4'>
                         <Button
-                            className='btn btn-outline-primary'
+                            className="btn btn-outline-success"
                             type='button'
                             onClick={() => setInStockOnly(!inStockOnly)}
                         >
-                            {inStockOnly ? '📊სრული სია' : '💣დარჩა'}
+                            {inStockOnly ? 'გამოუშვი რამდენია 🪃' : 'ესარის ჯიგარო სულ 🥇'}
                         </Button>
                     </div>
                 </div>
             </Form>
             <hr />
             <Collapsible
-                closedTitle='მაჩვენე'
-                opendTitle='დამალე'
+                closedTitle='⇣ ⇣ ⇣ მანჩვენე პროდუქცია ⇣ ⇣ ⇣'
+                oependTitle='⇡ ⇡ ⇡ დამალე პროდუქცია ⇡ ⇡ ⇡'
             >
-                <div className='d-flex flex-wrap'>
-                    {renderProducts()}
+                <div className='d-flex flex-wrap justify-content-between'>
+                    {renderProduct()}
                 </div>
             </Collapsible>
+
         </div>
     )
 }
